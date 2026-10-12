@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#080910">
+<title>AKASHIC RECORD</title>
+<style>
+:root{--bg:#080910;--panel:#11131f;--line:#272a3c;--text:#f3f1f8;--muted:#a4a5bb;--accent:#c5b7ff;--gold:#e9d6a3}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;min-height:100vh}
+button,input,textarea{font:inherit}button{cursor:pointer;color:inherit}.app{max-width:720px;margin:auto;min-height:100vh;padding-bottom:92px}
+header{padding:22px 20px 12px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #ffffff0c}
+.brand{letter-spacing:.19em;font-family:Georgia,serif;font-size:15px}.subbrand{font-size:10px;color:var(--muted);letter-spacing:.16em;margin-top:5px}
+main{padding:18px 16px}.tab{display:none}.tab.active{display:block}
+h1{font:normal 29px Georgia,serif;letter-spacing:.03em;margin:8px 0 8px}h2{font:normal 22px Georgia,serif;margin:5px 0 14px}
+p{line-height:1.7}.muted{color:var(--muted)}.tiny{font-size:12px;color:var(--muted);line-height:1.6}
+.space{position:relative;overflow:hidden;border:1px solid #ffffff18;border-radius:22px;min-height:390px;padding:26px 22px;background:radial-gradient(ellipse at 80% 25%,#292345 0,transparent 31%),radial-gradient(ellipse at 15% 80%,#142c43 0,transparent 35%),linear-gradient(145deg,#101321,#07080e 70%);display:flex;flex-direction:column;justify-content:space-between}
+.space:before{content:"";position:absolute;inset:0;background-image:radial-gradient(1px 1px at 10% 20%,#fff 99%,transparent),radial-gradient(1px 1px at 80% 13%,#fff 99%,transparent),radial-gradient(2px 2px at 30% 42%,#c9c1ff 99%,transparent),radial-gradient(1px 1px at 67% 65%,#fff 99%,transparent),radial-gradient(1px 1px at 91% 77%,#fff 99%,transparent),radial-gradient(1px 1px at 52% 22%,#fff 99%,transparent);opacity:.8;pointer-events:none}
+.space>*{position:relative}.eyebrow{font-size:10px;letter-spacing:.24em;color:var(--accent)}.home-quote{font:normal 23px/1.55 Georgia,serif;white-space:pre-wrap;overflow-wrap:anywhere;margin:24px 0}.home-ja{font-size:14px;line-height:1.8;color:#d4d0e2;white-space:pre-wrap}.pill{border:1px solid #ffffff24;border-radius:99px;background:#ffffff08;padding:9px 13px;font-size:12px}
+.row{display:flex;gap:9px;align-items:center;flex-wrap:wrap}.between{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.btn{border:1px solid #39394e;border-radius:13px;padding:12px 15px;background:#181a29}.btn.primary{background:#d9d0ff;color:#161323;border-color:#d9d0ff;font-weight:650}.btn.ghost{background:transparent}.btn.small{padding:8px 11px;font-size:12px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:17px;padding:15px;margin:11px 0}.poem-card{cursor:pointer}.poem-title{font:normal 18px Georgia,serif;margin:0 0 7px}.snippet{color:#dedbea;white-space:pre-wrap;line-height:1.6;font:normal 15px/1.65 Georgia,serif;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}.tag{font-size:10px;color:var(--accent);letter-spacing:.08em}
+.empty{padding:35px 16px;text-align:center;border:1px dashed #34364a;border-radius:18px;color:var(--muted);line-height:1.8}
+nav{position:fixed;z-index:10;bottom:0;left:0;right:0;padding:8px 6px calc(8px + env(safe-area-inset-bottom));background:#0b0c14f2;backdrop-filter:blur(20px);border-top:1px solid #ffffff16;display:flex;justify-content:space-around;max-width:720px;margin:auto}
+nav button{flex:1;background:none;border:0;color:#88899f;font-size:10px;display:flex;flex-direction:column;align-items:center;gap:4px;padding:6px 1px}nav button .ico{font-size:20px;line-height:1.2}nav button.active{color:var(--accent)}nav .addnav .ico{font-size:28px;color:#e5dcff}
+input[type=text],textarea{width:100%;background:#090a12;border:1px solid #303247;border-radius:11px;padding:12px;color:var(--text);outline:none}textarea{min-height:105px;resize:vertical;line-height:1.6}label.field{display:block;font-size:12px;color:var(--muted);margin:15px 0 7px}
+.filepick{display:block;border:1px dashed #4c4d68;border-radius:15px;text-align:center;padding:22px 14px;background:#ffffff04}.filepick input{max-width:100%;margin-top:12px;font-size:12px}
+.preview{width:100%;max-height:300px;object-fit:contain;border-radius:12px;background:#05060a;margin-top:12px}
+.detail-screen{position:fixed;z-index:30;inset:0;background:#080910;overflow:auto;display:none}.detail-screen.open{display:block}.detail-inner{max-width:720px;margin:auto;padding:18px 17px 50px}.detail-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:22px}.original{max-width:100%;max-height:360px;object-fit:contain;border-radius:13px;display:block;margin:10px auto;background:#111}.detail-english{font:normal 21px/1.7 Georgia,serif;white-space:pre-wrap;overflow-wrap:anywhere}.detail-ja{font-size:15px;line-height:1.9;white-space:pre-wrap}.divider{height:1px;background:var(--line);margin:22px 0}.ranknum{font:normal 22px Georgia,serif;color:var(--gold);width:32px;flex-shrink:0}.history-row{display:flex;align-items:center;gap:10px}.history-row .snippet{flex:1}
+.spinner{display:none;color:var(--accent);font-size:12px;margin-top:10px}.spinner.show{display:block}
+@media(min-width:600px){main{padding:24px}.space{min-height:460px;padding:35px}.home-quote{font-size:29px}}
+</style>
+</head>
+<body>
+<div class="app">
+<header><div><div class="brand">AKASHIC RECORD</div><div class="subbrand">A PRIVATE ARCHIVE OF WORDS</div></div><button class="pill" id="exportBtn">書き出す ↗</button></header>
+<main>
+<section class="tab active" id="home">
+<div class="space"><div><div class="eyebrow">A MESSAGE FROM THE UNIVERSE</div><h1>宇宙の記憶</h1><div class="tiny">あなたの心に残った言葉たち。</div></div><div id="homePoem"><div class="home-quote">まだ、ここには言葉がない。</div><div class="home-ja">＋から最初の詩を迎え入れてください。</div></div><div class="between"><span class="tiny" id="homeCount">0 WORDS IN YOUR UNIVERSE</span><button class="pill" id="randomBtn">別の詩をひらく ↗</button></div></div>
+<div class="row" style="margin-top:14px"><button class="btn primary" onclick="switchTab('add')">＋ 詩を追加する</button><button class="btn ghost" onclick="switchTab('favorites')">♡ お気に入りを見る</button></div>
+</section>
+<section class="tab" id="favorites"><h2>Favorites</h2><p class="tiny">忘れたくない言葉。</p><div id="favoritesList"></div></section>
+<section class="tab" id="add"><h2>New memory</h2><p class="tiny">写真から詩を取り込みます。画像・英語・和訳はこの端末のブラウザ内に保存されます。</p>
+<div class="card"><label class="filepick">写真を選ぶ<br><span class="tiny">iPhoneの写真ライブラリからスクリーンショットを選択</span><br><input id="imageInput" type="file" accept="image/*"></label><img id="imagePreview" class="preview" style="display:none" alt="選択した詩の画像"><div class="row" style="margin-top:12px"><button class="btn primary" id="ocrBtn">画像から英語を読み取る</button><button class="btn" id="translateBtn">日本語に翻訳</button></div><div id="status" class="spinner"></div><p class="tiny">初回の文字読み取りにはインターネット接続が必要です。翻訳は無料公開サービスを利用します。結果は必ず確認・修正してください。</p></div>
+<label class="field" for="titleInput">タイトル（任意）</label><input type="text" id="titleInput" placeholder="詩のタイトル、または自分用の名前">
+<label class="field" for="englishInput">Original · English</label><textarea id="englishInput" placeholder="読み取った英語をここで修正できます"></textarea>
+<label class="field" for="japaneseInput">Translation · 日本語</label><textarea id="japaneseInput" placeholder="和訳がここに入ります。自分で直してもOK"></textarea>
+<label class="field" for="thoughtInput">My interpretation · 私の解釈</label><textarea id="thoughtInput" placeholder="この言葉を読んだときに感じたこと"></textarea>
+<label class="field" for="artInput">Illustration · イラスト（任意）</label><label class="filepick">イラスト画像を選ぶ<input id="artInput" type="file" accept="image/*"></label><img id="artPreview" class="preview" style="display:none" alt="選択したイラスト">
+<div class="row" style="margin-top:18px"><button class="btn primary" id="saveBtn">この記憶を保存する</button><button class="btn ghost" id="clearFormBtn">クリア</button></div>
+</section>
+<section class="tab" id="ranking"><h2>My ranking</h2><p class="tiny">あなた自身が決める、言葉の順番。矢印で並べ替えられます。</p><div id="rankingList"></div></section>
+<section class="tab" id="history"><h2>Reading history</h2><p class="tiny">ひらいた詩と、そのときの自分の記録。</p><div id="historyList"></div><div class="row" style="margin-top:15px"><button class="btn ghost" id="clearHistoryBtn">履歴を消去</button></div></section>
+</main>
+<nav>
+<button class="active" data-tab="home"><span class="ico">✧</span>HOME</button>
+<button data-tab="favorites"><span class="ico">♡</span>FAVORITES</button>
+<button class="addnav" data-tab="add"><span class="ico">＋</span>ADD</button>
+<button data-tab="ranking"><span class="ico">☷</span>RANKING</button>
+<button data-tab="history"><span class="ico">◷</span>HISTORY</button>
+</nav>
+</div>
+<div class="detail-screen" id="detail"><div class="detail-inner"><div class="detail-top"><button class="btn small" id="backBtn">← 戻る</button><div class="row"><button class="btn small" id="detailFav">♡ お気に入り</button><button class="btn small" id="editBtn">編集</button><button class="btn small" id="deleteBtn">削除</button></div></div><div id="detailContent"></div></div></div>
+<script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+<script>
+const DB_NAME='AkashicRecordDB', STORE='poems'; let db, currentImage='', currentArt='', activePoemId=null, lastTab='home';
+const $=id=>document.getElementById(id);
+function openDB(){return new Promise((resolve,reject)=>{const req=indexedDB.open(DB_NAME,1);req.onupgradeneeded=()=>{const d=req.result;if(!d.objectStoreNames.contains(STORE))d.createObjectStore(STORE,{keyPath:'id'})};req.onsuccess=()=>{db=req.result;resolve()};req.onerror=()=>reject(req.error)})}
+function allPoems(){return new Promise((resolve,reject)=>{const r=db.transaction(STORE).objectStore(STORE).getAll();r.onsuccess=()=>resolve(r.result||[]);r.onerror=()=>reject(r.error)})}
+function putPoem(p){return new Promise((resolve,reject)=>{const r=db.transaction(STORE,'readwrite').objectStore(STORE).put(p);r.onsuccess=()=>resolve();r.onerror=()=>reject(r.error)})}
+function delPoem(id){return new Promise((resolve,reject)=>{const r=db.transaction(STORE,'readwrite').objectStore(STORE).delete(id);r.onsuccess=()=>resolve();r.onerror=()=>reject(r.error)})}
+function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,7)}
+function escapeHtml(s=''){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function switchTab(name){document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('active',x.id===name));document.querySelectorAll('nav button').forEach(x=>x.classList.toggle('active',x.dataset.tab===name));lastTab=name;render()}
+document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>switchTab(b.dataset.tab));
+function status(msg,show=true){$('status').textContent=msg;$('status').classList.toggle('show',show)}
+function readFile(file){return new Promise((resolve,reject)=>{const r=new FileReader();r.onload=()=>resolve(r.result);r.onerror=reject;r.readAsDataURL(file)})}
+$('imageInput').onchange=async e=>{const f=e.target.files[0];if(!f)return;currentImage=await readFile(f);$('imagePreview').src=currentImage;$('imagePreview').style.display='block';status('写真を読み込みました。文字読み取りを実行できます。',true)}
+$('artInput').onchange=async e=>{const f=e.target.files[0];if(!f)return;currentArt=await readFile(f);$('artPreview').src=currentArt;$('artPreview').style.display='block'}
+$('ocrBtn').onclick=async()=>{if(!currentImage){status('先に写真を選んでください。');return}if(!window.Tesseract){status('文字読み取りライブラリを読み込めません。通信環境を確認してください。');return}try{status('英語を読み取っています…画像によっては少し時間がかかります。');const result=await Tesseract.recognize(currentImage,'eng',{logger:m=>{if(m.status==='recognizing text')status('文字読み取り中… '+Math.round(m.progress*100)+'%')}});$('englishInput').value=result.data.text.trim();status('読み取りました。必要なら英語を修正してください。')}catch(e){status('読み取りに失敗しました。画像を選び直すか、英語を直接入力してください。')}}
+$('translateBtn').onclick=async()=>{const t=$('englishInput').value.trim();if(!t){status('先に英語を入力するか、文字を読み取ってください。');return}try{status('日本語に翻訳しています…');const chunks=t.match(/[\s\S]{1,450}/g)||[t];let out=[];for(const c of chunks){const url='https://api.mymemory.translated.net/get?q='+encodeURIComponent(c)+'&langpair=en|ja';const res=await fetch(url);const data=await res.json();if(data.responseStatus!==200)throw Error('translation failed');out.push(data.responseData.translatedText)}$('japaneseInput').value=out.join('');status('翻訳しました。表現を確認して必要なら修正してください。')}catch(e){status('自動翻訳を利用できませんでした。時間をおいて再試行するか、和訳を入力してください。')}}
+$('saveBtn').onclick=async()=>{const english=$('englishInput').value.trim(), japanese=$('japaneseInput').value.trim();if(!english&&!currentImage){status('写真を選ぶか、英語を入力してください。');return}const poems=await allPoems();const id=activePoemId||uid();const old=poems.find(p=>p.id===id)||{};const p={...old,id,title:$('titleInput').value.trim()||english.split('\n').find(x=>x.trim())?.slice(0,55)||'Untitled memory',image:currentImage||old.image||'',english,japanese,thought:$('thoughtInput').value.trim(),art:currentArt||old.art||'',favorite:old.favorite||false,rank:old.rank??poems.length,created:old.created||Date.now(),updated:Date.now(),history:old.history||[]};await putPoem(p);activePoemId=null;resetForm();switchTab('favorites');alert('宇宙の記憶に保存しました。')}
+function resetForm(){['titleInput','englishInput','japaneseInput','thoughtInput','imageInput','artInput'].forEach(id=>$(id).value='');currentImage='';currentArt='';$('imagePreview').style.display='none';$('artPreview').style.display='none';status('',false)}
+$('clearFormBtn').onclick=()=>{if(confirm('入力内容をクリアしますか？')){activePoemId=null;resetForm()}}
+async function render(){const ps=await allPoems();ps.sort((a,b)=>(b.updated||0)-(a.updated||0));$('homeCount').textContent=ps.length+' WORDS IN YOUR UNIVERSE';if(ps.length){const p=ps[Math.floor(Math.random()*ps.length)];$('homePoem').innerHTML=`<div class="home-quote">${escapeHtml(p.english||p.title)}</div><div class="home-ja">${escapeHtml(p.japanese||'')}</div><div style="margin-top:15px"><button class="pill" onclick="openDetail('${p.id}')">この詩をひらく ↗</button></div>`}else{$('homePoem').innerHTML='<div class="home-quote">まだ、ここには言葉がない。</div><div class="home-ja">＋から最初の詩を迎え入れてください。</div>'}
+const fav=ps.filter(p=>p.favorite);$('favoritesList').innerHTML=fav.length?fav.map(p=>poemCard(p)).join(''):'<div class="empty">まだお気に入りはありません。<br>詩をひらいて ♡ を押してください。</div>';
+const ranked=[...ps].sort((a,b)=>(a.rank??999)-(b.rank??999));$('rankingList').innerHTML=ranked.length?ranked.map((p,i)=>`<div class="card history-row"><div class="ranknum">${String(i+1).padStart(2,'0')}</div><div style="flex:1;min-width:0" onclick="openDetail('${p.id}')"><div class="poem-title">${escapeHtml(p.title)}</div><div class="snippet">${escapeHtml(p.english)}</div></div><div style="display:flex;flex-direction:column;gap:5px"><button class="btn small" onclick="moveRank('${p.id}',-1)">↑</button><button class="btn small" onclick="moveRank('${p.id}',1)">↓</button></div></div>`).join(''):'<div class="empty">詩を保存すると、ここで自分だけの順位を作れます。</div>';
+const hist=ps.filter(p=>(p.history||[]).length).sort((a,b)=>Math.max(...(b.history||[0]))-Math.max(...(a.history||[0])));$('historyList').innerHTML=hist.length?hist.map(p=>`<div class="card poem-card" onclick="openDetail('${p.id}')"><div class="between"><div class="poem-title">${escapeHtml(p.title)}</div><span class="tag">${p.history.length}回 OPENED</span></div><div class="snippet">${escapeHtml(p.english)}</div><div class="tiny" style="margin-top:8px">最終閲覧：${new Date(Math.max(...p.history)).toLocaleString('ja-JP')}</div>${p.thought?`<p class="tiny">私の解釈：${escapeHtml(p.thought)}</p>`:''}</div>`).join(''):'<div class="empty">詩をひらくと、ここに読んだ記録が残ります。</div>'}
+function poemCard(p){return `<div class="card poem-card" onclick="openDetail('${p.id}')"><div class="between"><div class="poem-title">${escapeHtml(p.title)}</div><span class="tag">MEMORY</span></div><div class="snippet">${escapeHtml(p.english)}</div><div class="tiny" style="margin-top:9px">${escapeHtml((p.japanese||'').slice(0,100))}</div></div>`}
+window.openDetail=async id=>{const p=(await allPoems()).find(x=>x.id===id);if(!p)return;activePoemId=id;p.history=p.history||[];p.history.push(Date.now());await putPoem(p);$('detailFav').textContent=p.favorite?'♥ お気に入り済み':'♡ お気に入り';$('detailContent').innerHTML=`<div class="eyebrow">PERSONAL COSMIC ARCHIVE</div><h1>${escapeHtml(p.title)}</h1>${p.image?`<img class="original" src="${p.image}" alt="元のスクリーンショット">`:''}<div class="divider"></div><div class="eyebrow">ORIGINAL · ENGLISH</div><div class="detail-english">${escapeHtml(p.english)}</div><div class="divider"></div><div class="eyebrow">TRANSLATION · 日本語</div><div class="detail-ja">${escapeHtml(p.japanese||'まだ和訳はありません。')}</div>${p.thought?`<div class="divider"></div><div class="eyebrow">MY INTERPRETATION</div><div class="detail-ja">${escapeHtml(p.thought)}</div>`:''}${p.art?`<div class="divider"></div><div class="eyebrow">ILLUSTRATION</div><img class="original" src="${p.art}" alt="自分のイラスト">`:''}<div class="divider"></div><div class="tiny">閲覧回数：${p.history.length}</div>`;$('detail').classList.add('open');render()}
+$('backBtn').onclick=()=>{$('detail').classList.remove('open');render()}
+$('detailFav').onclick=async()=>{const ps=await allPoems(),p=ps.find(x=>x.id===activePoemId);p.favorite=!p.favorite;await putPoem(p);$('detailFav').textContent=p.favorite?'♥ お気に入り済み':'♡ お気に入り';render()}
+$('editBtn').onclick=async()=>{const ps=await allPoems(),p=ps.find(x=>x.id===activePoemId);if(!p)return;$('detail').classList.remove('open');$('titleInput').value=p.title;$('englishInput').value=p.english;$('japaneseInput').value=p.japanese;$('thoughtInput').value=p.thought;currentImage=p.image||'';currentArt=p.art||'';if(currentImage){$('imagePreview').src=currentImage;$('imagePreview').style.display='block'}if(currentArt){$('artPreview').src=currentArt;$('artPreview').style.display='block'}switchTab('add')}
+$('deleteBtn').onclick=async()=>{if(confirm('この記憶を削除しますか？元に戻せません。')){await delPoem(activePoemId);$('detail').classList.remove('open');activePoemId=null;render()}}
+async function moveRank(id,delta){const ps=(await allPoems()).sort((a,b)=>(a.rank??999)-(b.rank??999));const i=ps.findIndex(p=>p.id===id),j=i+delta;if(j<0||j>=ps.length)return;[ps[i].rank,ps[j].rank]=[ps[j].rank??j,ps[i].rank??i];await Promise.all([putPoem(ps[i]),putPoem(ps[j])]);render()}
+$('randomBtn').onclick=async()=>{const ps=await allPoems();if(!ps.length)return;const p=ps[Math.floor(Math.random()*ps.length)];openDetail(p.id)}
+$('clearHistoryBtn').onclick=async()=>{if(!confirm('閲覧履歴だけを消去しますか？詩そのものは残ります。'))return;const ps=await allPoems();for(const p of ps){p.history=[];await putPoem(p)}render()}
+$('exportBtn').onclick=async()=>{const ps=await allPoems();const blob=new Blob([JSON.stringify({app:'AKASHIC RECORD',exportedAt:new Date().toISOString(),poems:ps},null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='akashic-record-backup.json';a.click();URL.revokeObjectURL(a.href)}
+openDB().then(render).catch(()=>alert('このブラウザで保存領域を開けませんでした。Safariで開き直してください。'));
+</script>
+</body></html>
